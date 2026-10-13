@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

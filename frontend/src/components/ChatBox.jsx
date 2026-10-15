@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import api from '../services/api.js';
 import toast from 'react-hot-toast';
 import AiBot from './AiBot'; // Make sure this import is here!
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatBox({ workspaceId, onNewMessage }) {
     const { user, socket } = useContext(AuthContext);
@@ -286,7 +287,10 @@ export default function ChatBox({ workspaceId, onNewMessage }) {
                                         ? 'bg-blue-600 dark:bg-blue-500 text-white rounded-2xl rounded-tr-sm' 
                                         : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-gray-700 rounded-2xl rounded-tl-sm'
                                     }`}>
-                                        <span>{msg.text}</span>
+                                        {/* Wrap the message text in ReactMarkdown */}
+                                    <div className="markdown-body text-inherit">
+                                 <ReactMarkdown>{msg.text}</ReactMarkdown>
+                                    </div>
                                         {/* Display 'edited' tag if updated */}
                                         {msg.isEdited && (
                                             <span className="text-[9px] opacity-70 text-right mt-0.5">(edited)</span>
@@ -303,12 +307,11 @@ export default function ChatBox({ workspaceId, onNewMessage }) {
 
              {/* --- NEW: AI Suggestion Preview Box --- */}
             {aiSuggestion && (
-                <div className="absolute bottom-16 left-2 right-2 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 p-3 rounded-lg shadow-lg z-10 animate-in slide-in-from-bottom-2 duration-200">
-                    <div className="flex items-center gap-2 mb-2 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase">
+               <div className="absolute bottom-16 left-2 right-2 bg-indigo-50 dark:bg-indigo-900 border border-indigo-200 dark:border-indigo-800 p-3 rounded-lg shadow-lg z-10 animate-in slide-in-from-bottom-2 duration-200">                    <div className="flex items-center gap-2 mb-2 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase">
                         <span>✨ AI Suggestion</span>
                     </div>
                     <p className="text-sm text-gray-800 dark:text-gray-200 mb-3 max-h-32 overflow-y-auto whitespace-pre-wrap">
-                        {aiSuggestion}
+                       <ReactMarkdown>{aiSuggestion}</ReactMarkdown>
                     </p>
                     <div className="flex gap-2">
                         <button 
